@@ -1,61 +1,60 @@
 * {
-    box-sizing: border-box;
-    background-size: cover;
+  box-sizing: border-box;
+  background-size: cover;
 }
-body{
-    background-color: #000000;
-    font-family: 'Courier New';
-    font-size: 2em;
-    color:#FFF ;
+body {
+  background-color: #000000;
+  font-family: "Courier New";
+  font-size: 2em;
+  color: #fff;
 }
-header{
-    display: flex;
-    justify-content: center;
-    height: 25vh;   
+header {
+  display: flex;
+  justify-content: center;
+  height: 25vh;
 }
-
-.Head_btn{
-    padding: 5px;
-    font-size: 16px;
-    width: 31%;
-    background: #00abdc;
-    color: #FFF;
-    font-weight: bold;
-    font-family: 'Courier New';
+.Head_btn {
+  padding: 5px;
+  font-size: 16px;
+  width: 31%;
+  background: #00abdc;
+  color: #fff;
+  font-weight: bold;
+  font-family: "Courier New";
 }
 
 .main {
-    width: 40%;
-    height: 70vh;
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    align-items: center;
-    margin: 30px auto;
-    background-color: #1a1a1a;
-    overflow: hidden;
-    border-radius: 10%;
-    padding: 10px;
-    font-family: tahoma;
+  width: 40%;
+  height: 70vh;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  margin: 30px auto;
+  background-color: #1a1a1a;
+  overflow: hidden;
+  border-radius: 10%;
+  padding: 10px;
+  font-family: tahoma;
 }
-div {            
-    border-radius: 5px;
-    width: 22%;
-    background: url(imgs/internet.png) no-repeat;
-    background-size: contain;            
-    cursor: pointer;
-    transition: background-color .1s ease-in-out;
+div {
+  border-radius: 5px;
+  width: 22%;
+  background: url(imgs/internet.png) no-repeat;
+  background-size: contain;
+  cursor: pointer;
+  transition: background-color 0.1s ease-in-out;
 }
 div:hover {
-    opacity: 0.7;
+  opacity: 0.7;
 }
 img {
-    color: #fff;
-    margin: 0;
-    opacity: 0;
-    width: 100%;
-    height: 100%;
-    background-size: contain;
-    transition: opacity .5s ease-in-out;
+  color: #fff;
+  margin: 0;
+  opacity: 0;
+  width: 100%;
+  height: 100%;
+  background-size: contain;
+  transition: opacity 0.5s ease-in-out;
 }
