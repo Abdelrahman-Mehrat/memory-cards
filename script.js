@@ -1,7 +1,5 @@
 var main = document.getElementsByTagName("main")[0],
-  all_div = document.getElementsByTagName("div"), //html collection
-  div,
-  img;
+  all_div = document.getElementsByTagName("div"); //html collection
 var btn = document.getElementById("btn");
 var audioRight = new Audio("right.wav");
 var myArray = [
@@ -18,7 +16,7 @@ var myArray = [
   "imgs/react.png",
   "imgs/scrat.jfif",
 ];
-//kind of different way to shuffle an array
+//way to shuffle an array
 Array.prototype.shuffleFun = function () {
   var i = this.length,
     j,
@@ -32,83 +30,69 @@ Array.prototype.shuffleFun = function () {
 };
 
 function setItemsFun() {
-  //call shuffle function then append each element to the screen
-  //   myArray.shuffleFun();
+  // myArray.shuffleFun();
   let wrapperCards = "";
-  for (var i = 0; i <= myArray.length - 1; i++) {
-    wrapperCards = `
-      <div class="wrap-card">
-      <img src="${myArray[i]}" id="${myArray[i]}">
+  let counter = 1;
+  for (const img_src of myArray) {
+    wrapperCards += `
+      <div class="col-sm-3 p-2">
+      <div class="wrap-card ">
+      <img src="${img_src}" id="${img_src}" data-answer="${counter}" class="selected_img">
+      </div>
       </div>`;
-    // div = document.createElement("div");
-    // main.appendChild(div);
-    // img = document.createElement("img");
-    // img.setAttribute("src", myArray[i]);
-    // img.setAttribute("id", myArray[i]);
-    // div.appendChild(img);
-    main.insertAdjacentHTML("beforeend", wrapperCards);
+    counter++;
   }
+  main.insertAdjacentHTML("beforeend", wrapperCards);
+  let cardWrap_img = document.querySelectorAll(".wrap-card img");
+  setTimeout(() => {
+    cardWrap_img.forEach((el) => {
+      el.classList.remove("selected_img");
+    });
+  }, 500);
 }
+
 setItemsFun();
+// Add click event
 function clickCard() {
   let cardWrap = document.querySelectorAll(".wrap-card");
+  let cardWrap_img = document.querySelectorAll(".wrap-card img");
+
   let checkAns = [];
   cardWrap.forEach((el) => {
     el.addEventListener("click", (e) => {
-      console.log(e.target.id);
+      const isFlipped = document.querySelectorAll(".selected_img").length;
+      if (isFlipped == 2) return false;
+
+      e.target.classList.add("selected_img");
+      e.target.parentElement.classList.add("selected");
       checkAns.push(e.target.id);
-      console.log(checkAns);
-      e.target.style.opacity = "1";
+      // check answer True
+      if (checkAns[0] == checkAns[1] && checkAns) {
+        let correctAns = document.querySelectorAll(".selected_img");
+        setTimeout(() => {
+          correctAns.forEach((e) => {
+            e.parentElement.classList.remove("selected");
+            e.parentElement.remove();
+            checkAns = [];
+          });
+        }, 1000);
+      }
+      // check wrong ans
+      else if (checkAns[0] != checkAns[1] && checkAns.length == 2) {
+        setTimeout(() => {
+          checkAns = [];
+          cardWrap_img.forEach((element) => {
+            console.log(element);
+            element.parentElement.classList.remove("selected");
+            element.classList.remove("selected_img");
+          });
+        }, 1000);
+      }
     });
   });
 }
 clickCard();
-// var test = 0;
-// var compare = [],
-//   flag = true;
-// var newTest = Array.from(all_div);
-// function clk() {
-//   for (var i = 0; i <= newTest.length - 1; i++) {
-//     newTest[i].onclick = function () {
-//       console.log(newTest);
-//       if (!flag) return;
-//       this.firstChild.style.opacity = "1";
-//       if (compare.length == 0) {
-//         compare[0] = this;
-//         compare[0].style.pointerEvents = "none"; //make the first card not clickable to not make confusion in "check function"
-//       } else if (compare.length == 1) {
-//         compare[1] = this;
-//       }
-//       //check after setting two items together in an array
-//       if (compare.length == 2) {
-//         flag = false;
-//         setTimeout(check, 700);
-//       }
-//     };
-//   }
-// }
-// clk();
-//function of getting match true or false
-// function check() {
-//   //same id means same img name as i set them
 
-//   if (compare[0].firstChild.id === compare[1].firstChild.id) {
-//     audioRight.play();
-//     ++test;
-//     compare[0].firstChild.remove();
-//     compare[1].firstChild.remove();
-//     //console.log(test);
-//   } else {
-//     compare[0].style.pointerEvents = "auto"; //get the default style for the first opened card
-//     compare[0].firstChild.style.opacity = "0";
-//     compare[1].firstChild.style.opacity = "0";
-//   }
-//   //reload the cards
-//   done();
-//   //reset the array to empty to start comparing two items in the next round
-//   compare = [];
-//   flag = true;
-// }
 //restart btn
 btn.onclick = function () {
   restart();
@@ -125,5 +109,5 @@ function restart() {
   main.innerHTML = "";
   setItemsFun();
   test = 0;
-  clk();
+  clickCard();
 }

@@ -1,6 +1,8 @@
 * {
   box-sizing: border-box;
   background-size: cover;
+  padding: 0px;
+  margin: 0px;
 }
 body {
   background-color: #000000;
@@ -11,12 +13,10 @@ body {
 header {
   display: flex;
   justify-content: center;
-  height: 25vh;
 }
 .Head_btn {
   padding: 5px;
   font-size: 16px;
-  width: 31%;
   background: #00abdc;
   color: #fff;
   font-weight: bold;
@@ -24,8 +24,8 @@ header {
 }
 
 .main {
-  width: 40%;
-  height: 70vh;
+  width: 60%;
+  /* height: 70vh; */
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
@@ -38,10 +38,17 @@ header {
   padding: 10px;
   font-family: tahoma;
 }
-div {
+.wrap-card {
   border-radius: 5px;
-  width: 22%;
-  background: url(imgs/internet.png) no-repeat;
+  background: rgb(42, 27, 98);
+  background: linear-gradient(
+    0deg,
+    rgba(42, 27, 98, 1) 0%,
+    rgba(136, 6, 6, 1) 100%
+  );
+
+  /* width: 22%; */
+  /* background: url(imgs/internet.png) no-repeat; */
   background-size: contain;
   cursor: pointer;
   transition: background-color 0.1s ease-in-out;
@@ -57,4 +64,12 @@ img {
   height: 100%;
   background-size: contain;
   transition: opacity 0.5s ease-in-out;
+}
+.selected_img {
+  opacity: 1 !important;
+  pointer-events: none !important;
+}
+
+.selected {
+  pointer-events: none;
 }
