@@ -1,5 +1,4 @@
-var main = document.getElementsByTagName("main")[0],
-  all_div = document.getElementsByTagName("div"); //html collection
+var main = document.querySelector(".main");
 var btn = document.getElementById("btn");
 var audioRight = new Audio("right.wav");
 var myArray = [
@@ -17,20 +16,20 @@ var myArray = [
   "imgs/scrat.jfif",
 ];
 //way to shuffle an array
-Array.prototype.shuffleFun = function () {
-  var i = this.length,
+(function shuffleFun() {
+  var i = myArray.length,
     j,
     temp;
   while (--i > 0) {
     j = Math.floor(Math.random() * (i + 1));
-    temp = this[j];
-    this[j] = this[i];
-    this[i] = temp;
+    temp = myArray[j];
+    myArray[j] = myArray[i];
+    myArray[i] = temp;
   }
-};
+})();
 
 function setItemsFun() {
-  // myArray.shuffleFun();
+  // shuffleFun();
   let wrapperCards = "";
   let counter = 1;
   for (const img_src of myArray) {
@@ -50,49 +49,57 @@ function setItemsFun() {
     });
   }, 500);
 }
-
 setItemsFun();
+//
 // Add click event
+let checkAns = [];
 function clickCard() {
   let cardWrap = document.querySelectorAll(".wrap-card");
-  let cardWrap_img = document.querySelectorAll(".wrap-card img");
 
-  let checkAns = [];
   cardWrap.forEach((el) => {
     el.addEventListener("click", (e) => {
       const isFlipped = document.querySelectorAll(".selected_img").length;
       if (isFlipped == 2) return false;
-
-      e.target.classList.add("selected_img");
-      e.target.parentElement.classList.add("selected");
-      checkAns.push(e.target.id);
+      checkAnswer(e);
       // check answer True
       if (checkAns[0] == checkAns[1] && checkAns) {
-        let correctAns = document.querySelectorAll(".selected_img");
-        setTimeout(() => {
-          correctAns.forEach((e) => {
-            e.parentElement.classList.remove("selected");
-            e.parentElement.remove();
-            checkAns = [];
-          });
-        }, 1000);
+        trueAnswer();
       }
       // check wrong ans
       else if (checkAns[0] != checkAns[1] && checkAns.length == 2) {
-        setTimeout(() => {
-          checkAns = [];
-          cardWrap_img.forEach((element) => {
-            console.log(element);
-            element.parentElement.classList.remove("selected");
-            element.classList.remove("selected_img");
-          });
-        }, 1000);
+        wrongAnswer();
       }
     });
   });
 }
 clickCard();
-
+function checkAnswer(e) {
+  e.target.classList.add("selected_img");
+  e.target.parentElement.classList.add("selected");
+  checkAns.push(e.target.id);
+}
+function trueAnswer() {
+  let correctAns = document.querySelectorAll(".selected_img");
+  console.log(correctAns);
+  setTimeout(() => {
+    correctAns.forEach((e) => {
+      e.parentElement.classList.remove("selected");
+      e.parentElement.remove();
+      checkAns = [];
+    });
+  }, 1000);
+}
+function wrongAnswer() {
+  let cardWrap_img = document.querySelectorAll(".wrap-card img");
+  console.log(checkAns);
+  setTimeout(() => {
+    checkAns = [];
+    cardWrap_img.forEach((element) => {
+      element.parentElement.classList.remove("selected");
+      element.classList.remove("selected_img");
+    });
+  }, 1000);
+}
 //restart btn
 btn.onclick = function () {
   restart();
