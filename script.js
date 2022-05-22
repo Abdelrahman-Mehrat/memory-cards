@@ -118,3 +118,10 @@ function restart() {
   test = 0;
   clickCard();
 }
+arr2 = [1, 2, 3];
+arr2.forEach((e) => {
+  e + 1;
+});
+let arr3 = arr2.map((e) => e + 2);
+console.log(arr3);
+// console.log(arr2);
