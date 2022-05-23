@@ -37,9 +37,9 @@ function renderCards() {
   for (const img_src of cardsArr) {
     wrapperCards += `
       <div class="col-sm-3 p-2">
-      <div class="wrap-card ">
-      <img src="${img_src}" id="${img_src}" data-answer="${counter}" class="selected_img">
-      </div>
+        <div class="wrap-card ">
+          <img src="${img_src}" id="${img_src}" data-answer="${counter}" class="selected_img">
+        </div>
       </div>`;
     counter++;
   }
@@ -62,9 +62,7 @@ function cardEvent() {
       if (isFlipped == 2) return false;
       checkAnswer(e);
       // check answer True
-      if (checkAns[0] == checkAns[1] && checkAns) {
-        trueAnswer();
-      }
+      if (checkAns[0] == checkAns[1] && checkAns) trueAnswer();
       // check wrong ans
       else if (checkAns[0] != checkAns[1] && checkAns.length == 2) {
         wrongAnswer();
@@ -79,7 +77,6 @@ function checkAnswer(e) {
 }
 function trueAnswer() {
   let correctAns = document.querySelectorAll(".selected_img");
-  console.log(correctAns);
   setTimeout(() => {
     correctAns.forEach((e) => {
       e.parentElement.classList.remove("selected");
@@ -90,7 +87,6 @@ function trueAnswer() {
 }
 function wrongAnswer() {
   let cardWrap_img = document.querySelectorAll(".wrap-card img");
-  console.log(checkAns);
   setTimeout(() => {
     checkAns = [];
     cardWrap_img.forEach((element) => {
@@ -114,9 +110,3 @@ function restart() {
   test = 0;
   cardEvent();
 }
-arr2 = [1, 2, 3];
-arr2.forEach((e) => {
-  e + 1;
-});
-let arr3 = arr2.map((e) => e + 2);
-console.log(arr3);
