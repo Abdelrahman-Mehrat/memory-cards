@@ -1,7 +1,8 @@
-var main = document.querySelector(".main");
-var btn = document.getElementById("btn");
-var audioRight = new Audio("right.wav");
-var myArray = [
+let boxContainer = document.querySelector(".main");
+let restartBtn = document.getElementById("btn");
+let checkAns = [];
+let audioRight = new Audio("right.wav");
+let cardsArr = [
   "imgs/html5.png",
   "imgs/css3.png",
   "imgs/js.png",
@@ -15,24 +16,25 @@ var myArray = [
   "imgs/react.png",
   "imgs/scrat.jfif",
 ];
-//way to shuffle an array
-(function shuffleFun() {
-  var i = myArray.length,
-    j,
-    temp;
-  while (--i > 0) {
-    j = Math.floor(Math.random() * (i + 1));
-    temp = myArray[j];
-    myArray[j] = myArray[i];
-    myArray[i] = temp;
+//
+renderCards();
+cardEvent();
+restartBtn.onclick = function () {
+  restart();
+};
+//
+function shuffleCards() {
+  for (let i = cardsArr.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [cardsArr[i], cardsArr[j]] = [cardsArr[j], cardsArr[i]];
   }
-})();
+}
 
-function setItemsFun() {
-  // shuffleFun();
+function renderCards() {
   let wrapperCards = "";
   let counter = 1;
-  for (const img_src of myArray) {
+  shuffleCards();
+  for (const img_src of cardsArr) {
     wrapperCards += `
       <div class="col-sm-3 p-2">
       <div class="wrap-card ">
@@ -41,21 +43,19 @@ function setItemsFun() {
       </div>`;
     counter++;
   }
-  main.insertAdjacentHTML("beforeend", wrapperCards);
-  let cardWrap_img = document.querySelectorAll(".wrap-card img");
+  boxContainer.insertAdjacentHTML("beforeend", wrapperCards);
+  // hide images after 0.5s to start the game
   setTimeout(() => {
+    let cardWrap_img = document.querySelectorAll(".wrap-card img");
     cardWrap_img.forEach((el) => {
       el.classList.remove("selected_img");
     });
   }, 500);
 }
-setItemsFun();
 //
 // Add click event
-let checkAns = [];
-function clickCard() {
+function cardEvent() {
   let cardWrap = document.querySelectorAll(".wrap-card");
-
   cardWrap.forEach((el) => {
     el.addEventListener("click", (e) => {
       const isFlipped = document.querySelectorAll(".selected_img").length;
@@ -72,7 +72,6 @@ function clickCard() {
     });
   });
 }
-clickCard();
 function checkAnswer(e) {
   e.target.classList.add("selected_img");
   e.target.parentElement.classList.add("selected");
@@ -100,10 +99,7 @@ function wrongAnswer() {
     });
   }, 1000);
 }
-//restart btn
-btn.onclick = function () {
-  restart();
-};
+
 //run auto after removing all the cards
 function done() {
   if (test == 6) {
@@ -111,12 +107,12 @@ function done() {
     restart();
   }
 }
-//used in restart btn or after finishing the game
+//used in restart restartBtn or after finishing the game
 function restart() {
-  main.innerHTML = "";
-  setItemsFun();
+  boxContainer.innerHTML = "";
+  renderCards();
   test = 0;
-  clickCard();
+  cardEvent();
 }
 arr2 = [1, 2, 3];
 arr2.forEach((e) => {
@@ -124,4 +120,3 @@ arr2.forEach((e) => {
 });
 let arr3 = arr2.map((e) => e + 2);
 console.log(arr3);
-// console.log(arr2);
